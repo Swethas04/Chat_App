@@ -1,25 +1,20 @@
-import 'package:chat_app/Screens/chat_list.dart';
-import 'package:chat_app/Screens/settings.dart';
-
+import 'package:chat_app/auth/auth_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+  void logout() async {
+    await authService.value.SignOut();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
-              );
-            },
-            icon: Icon(Icons.settings),
-          ),
+          IconButton(onPressed: logout, icon: Icon(Icons.logout_rounded)),
         ],
       ),
       backgroundColor: Colors.white,
@@ -45,10 +40,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ChatList()),
-                    );
+                    context.go('/chat');
                   },
                   child: Text("Start to chat"),
                 ),
